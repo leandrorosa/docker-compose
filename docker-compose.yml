@@ -1,0 +1,25 @@
+version: '2.0'
+services:
+  oracle:
+    image: wnameless/oracle-xe-11g-r2
+    ports:
+      - "49161:1521"
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ../postgres/data:/var/lib/postgresql/data
+  jupyter:
+    image: jupyter/datascience-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - ../jupyter:/home/jovyan
+  debug:
+    image: debug:centos7
+    entrypoint: /bin/bash
+    stdin_open: true
+    tty: true
